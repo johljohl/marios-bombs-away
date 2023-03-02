@@ -1,33 +1,31 @@
 import React from "react";
 import "./App.css";
+import marioExplode from "./img/mario.png"; // import marioExplode icon
+import marioFlag from "./img/mario2.png"; // import marioFlag icon
 
-function Cell(props) {
-  // Kör onClick-funktionen som skickades från Board-komponenten med indexet för denna cell
-  const handleClick = () => {
+const Cell = (props) => {
+  // Calls the ShowClickedCell-function from the Board-Components
+  const showClickedCell = () => {
     props.onClick(props.cell.index);
   };
 
   return (
     <div>
-      <button onClick={handleClick}>
-        {/* Visa en bomb-ikon om cellen innehåller en mina */}
+      <button onClick={showClickedCell}>
         {props.cell.visible ? (
-          props.cell.hasMine ? (
-            <img
-              src="http://www.rw-designer.com/icon-image/1728-48x48x8.png"
-              alt="bomb"
-            />
+          props.cell.hasMine ? ( // Shows a bomb icon if the cell has a mine!
+            <img src={marioExplode} alt="bomb" />
           ) : (
-            // Visa antalet grannminor om cellen inte innehåller en mina och är synlig
-            props.cell.numberOfNeighbouringMines || ""
+            props.cell.numberOfNeighbouringMines || (
+              <img src={marioFlag} alt="empty" />
+            )
           )
         ) : (
-          // Dölj innehållet i cellen om den inte är synlig
-          ""
+          <span style={{ color: "green" }}>?</span>
         )}
       </button>
     </div>
   );
-}
+};
 
 export default Cell;
